@@ -1,16 +1,22 @@
-const { response } = require("express");
+const { response, request } = require("express");
 
-const getUsers = (req, res = response) => {
+const getUsers = (req = request, res = response) => {
+  const { q, nombre, apiKey = 0 } = req.query;
   res.json({
     ok: true,
     msg: "GET Controller",
+    q,
+    nombre,
+    apiKey,
   });
 };
 
 const putUsers = (req, res) => {
+  const id = req.params.id;
   res.json({
     ok: true,
     msg: "PUT Controller",
+    id,
   });
 };
 
@@ -20,7 +26,7 @@ const postUser = (req, res) => {
     ok: true,
     msg: "POST Controller",
     player,
-    club: `Biggest club is ${club1}`,
+    club: `Biggest club is ${club}`,
   });
 };
 
