@@ -1,4 +1,5 @@
 const { response, request } = require("express");
+const User = require("../models/user");
 
 const getUsers = (req = request, res = response) => {
   const { q, nombre, apiKey = 0 } = req.query;
@@ -20,13 +21,13 @@ const putUsers = (req, res) => {
   });
 };
 
-const postUser = (req, res) => {
-  const { player, club } = req.body;
+const postUser = async (req, res) => {
+  const body = req.body;
+  const user = new User(body);
+  await user.save();
   res.json({
-    ok: true,
     msg: "POST Controller",
-    player,
-    club: `Biggest club is ${club}`,
+    user,
   });
 };
 
