@@ -13,12 +13,22 @@ const getUsers = (req = request, res = response) => {
   });
 };
 
-const putUsers = (req, res) => {
-  const id = req.params.id;
+const putUsers = async (req, res) => {
+  const { id } = req.params;
+  const { password, google, ...rest } = req.body;
+
+  if (password) {
+    //Encrypt the password
+    const salt = bcrypt.genSaltSync();
+    rest.password = bcrypt.hashSync(password, salt);
+  }
+
+  const user = await User.findByIdAndUpdate(id, rest);
+
   res.json({
     ok: true,
     msg: "PUT Controller",
-    id,
+    user,
   });
 };
 
