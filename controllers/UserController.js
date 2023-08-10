@@ -58,11 +58,13 @@ const postUser = async (req = request, res = response) => {
   });
 };
 
-const deleteUser = (req, res) => {
-  res.json({
-    ok: true,
-    msg: "DELETE Controller",
-  });
+const deleteUser = async (req = request, res = response) => {
+  const { id } = req.params;
+  //! Physical delete of the user (not recommended, use soft delete)
+  // const user = await User.findByIdAndDelete(id);
+  //* Logical delete of the user (recommended)
+  const user = await User.findByIdAndUpdate(id, { status: false });
+  res.json(user);
 };
 
 const patchUser = (req, res) => {
