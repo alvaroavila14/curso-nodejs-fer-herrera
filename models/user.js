@@ -34,7 +34,8 @@ const UserSchema = new Schema({
 
 //Below there's a method used to remove the visualization of __v and password fields
 UserSchema.methods.toJSON = function () {
-  const { __v, password, ...user } = this.toObject();
+  const { __v, _id, password, ...user } = this.toObject();
+  user.uid = _id;
   return user;
 };
 

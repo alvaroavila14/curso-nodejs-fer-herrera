@@ -13,10 +13,11 @@ const {
   isMailRegistered,
   isValidUser,
 } = require("../helpers/db-validators");
+const { validateJWT } = require("../middlewares/validate-jwt");
 
 const router = Router();
 
-router.get("/", getUsers);
+router.get("/", [validateJWT], getUsers);
 
 router.put(
   "/:id",
